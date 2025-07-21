@@ -1,0 +1,281 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>人形机器人学习笔记-宇树篇三-ROS简单学习 | 谦</title><meta name="author" content="Llover"><meta name="copyright" content="Llover"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="简单了解ROS的基本知识，达到可以用ROS发布和订阅一些消息的地步">
+<meta property="og:type" content="article">
+<meta property="og:title" content="人形机器人学习笔记-宇树篇三-ROS简单学习">
+<meta property="og:url" content="http://example.com/2025/07/12/%E4%BA%BA%E5%BD%A2%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%AE%87%E6%A0%91%E7%AF%87%E4%B8%89-ROS%E7%AE%80%E5%8D%95%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="谦">
+<meta property="og:description" content="简单了解ROS的基本知识，达到可以用ROS发布和订阅一些消息的地步">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/img/avatar.jpg">
+<meta property="article:published_time" content="2025-07-12T00:55:34.000Z">
+<meta property="article:modified_time" content="2025-07-13T18:55:31.155Z">
+<meta property="article:author" content="Llover">
+<meta property="article:tag" content="人形机器人">
+<meta property="article:tag" content="宇树">
+<meta property="article:tag" content="ROS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/avatar.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "人形机器人学习笔记-宇树篇三-ROS简单学习",
+  "url": "http://example.com/2025/07/12/%E4%BA%BA%E5%BD%A2%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%AE%87%E6%A0%91%E7%AF%87%E4%B8%89-ROS%E7%AE%80%E5%8D%95%E5%AD%A6%E4%B9%A0/",
+  "image": "http://example.com/img/avatar.jpg",
+  "datePublished": "2025-07-12T00:55:34.000Z",
+  "dateModified": "2025-07-13T18:55:31.155Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Llover",
+      "url": "http://example.com/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2025/07/12/%E4%BA%BA%E5%BD%A2%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%AE%87%E6%A0%91%E7%AF%87%E4%B8%89-ROS%E7%AE%80%E5%8D%95%E5%AD%A6%E4%B9%A0/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: {"appId":"QOL9P6UGT7","apiKey":"c20840b94279f64b08484ed090e80a05","indexName":"hexo","hitsPerPage":10,"languages":{"input_placeholder":"Search for Posts","hits_empty":"No results found for: ${query}","hits_stats":"${hits} results found in ${time} ms"}},
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":300,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: {"chs_to_cht":"You have switched to Traditional Chinese","cht_to_chs":"You have switched to Simplified Chinese","day_to_night":"You have switched to Dark Mode","night_to_day":"You have switched to Light Mode","bgLight":"#000000","bgDark":"#1f1f1f","position":"bottom-left"},
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: false,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '人形机器人学习笔记-宇树篇三-ROS简单学习',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous"><script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" integrity="sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4" crossorigin="anonymous"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js" integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC+Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa" crossorigin="anonymous"></script><meta name="generator" content="Hexo 7.3.0"></head><body><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="https://cdn.jsdelivr.net/gh/zhaobohao-byte/img/202504142226508.png" alt="Logo"><span class="site-name">谦</span></a><a class="nav-page-title" href="/"><span class="site-name">人形机器人学习笔记-宇树篇三-ROS简单学习</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> Search</span></span></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">人形机器人学习笔记-宇树篇三-ROS简单学习</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2025-07-12T00:55:34.000Z" title="Created 2025-07-12 08:55:34">2025-07-12</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2025-07-13T18:55:31.155Z" title="Updated 2025-07-14 02:55:31">2025-07-14</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0/">编程学习</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0/%E5%AE%87%E6%A0%91G1/">宇树G1</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0/%E5%AE%87%E6%A0%91G1/%E8%BD%AF%E4%BB%B6%E5%AD%A6%E4%B9%A0/">软件学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">Word Count:</span><span class="word-count">1.6k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">Reading Time:</span><span>5mins</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="container post-content" id="article-container"><h1 id="1-ROS基本">1. ROS基本</h1>
+<ol>
+<li>what？ - 类似于安卓系统的一个机器人操作系统。</li>
+<li>why？ - 方便在面对不同硬件时，可以快速的搭建一个机器人（安卓手机），并可以使用社区中的node（安卓中的APP）实现不同功能（比如手机打开游戏即为游戏机，打开阅读即为书）。</li>
+<li>How？ -</li>
+</ol>
+<h2 id="1-1-ROS的基本单元：Node节点和Package包">1.1 ROS的基本单元：Node节点和Package包</h2>
+<p>Node：实现功能包的基本单元，如导航单元、移动单元等，但是这些节点的功能相对单一，需要很多节点相互配合才能完成一个复杂功能，因此在进行ROS相关功能下载时，不能只下载节点，而是以包的形式进行下载。</p>
+<p>Package：多个node节点共同组合，形成具有相对复杂功能的包 - 节点的容器，ROS的基本单元。</p>
+<p>利用catkin和cmake可以将多个node，组合成为一个包。</p>
+<h3 id="1-1-1-Package-和-Node-创建">1.1.1 Package 和 Node 创建</h3>
+<ul>
+<li>ROS工作空间创建</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 初始化与创建ROS空间,会自动生成一个CMarkList.txt文件用来组织文件编译</span></span><br><span class="line"><span class="built_in">mkdir</span> -p ~/catkin_ws/src <span class="comment"># 创建ROS空间文件夹</span></span><br><span class="line"><span class="built_in">cd</span> ~/catkin_ws/src  <span class="comment"># 进入ROS空间文件夹</span></span><br><span class="line">catkin_init_workspace <span class="comment"># 创建ROS空间会自动生成一个CMarkList.txt文件用来组织文件编译，同时生成一个src文件夹用来存放ROS包、自定义文件等</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>此时就可以通过catkin_make,对工程进行编译，生成的配置文件和可执行文件会在devel文件夹下；</p>
+<p>通过source ./devel/setup.bash可以设置ROS；</p>
+</blockquote>
+<ul>
+<li>
+<p>Package包创建</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/catkin_ws/src  <span class="comment"># 进入ROS空间文件夹</span></span><br><span class="line"><span class="comment"># 创建一个名为test_pkg的包，后面数据表示为包所需的依赖；</span></span><br><span class="line">catkin_create_package test_pak roscpp rospy std_msgs <span class="comment"># 此时会在src下生成一个名为test_pak的文件夹</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>常用的关于包搜索的命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">rospack profile <span class="comment"># 显示ROS包信息</span></span><br><span class="line">rospack find [package_name] <span class="comment">#显示package_name包的所在路径</span></span><br><span class="line">rospack depends [package_name] <span class="comment">#检查package_name所需的依赖包</span></span><br><span class="line">roscd [package_name] <span class="comment"># 进入package_name所在文件夹</span></span><br><span class="line">rosls [package_name] <span class="comment"># 显示[package_name]文件夹内容</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li>
+<p>Package下Node创建</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//直接在pkg所在文件夹下创建cpp文件，然后编辑cpp文件内容</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;ros/ros.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span>* argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ros::<span class="built_in">init</span>(argc,argv,<span class="string">&quot;test_pkg_node1&quot;</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">while</span>(ros::ok)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;node1 is ok&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//node 的作用：在运行node时，显示node1 is ok</span></span><br><span class="line"><span class="comment">//在[pkg_name]文件夹下，修改CMakeList.txt文件，使其成功编译</span></span><br><span class="line"><span class="built_in">add_execute</span>($[pkg_name]_node [要编译的cpp源文件])</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>测试步骤：</p>
+<ol>
+<li>catkin_make</li>
+<li>source ./devel/setup.bash</li>
+<li>roscore</li>
+<li>另开启一个终端，source ./devel/setup.bash</li>
+<li>rosrun [pkg_name] [node_name]</li>
+</ol>
+</blockquote>
+<blockquote>
+<p>Node相关测试命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">rosnode list <span class="comment"># 列出有关节点的信息</span></span><br><span class="line">rosnode ping NODE <span class="comment"># 测试节点的连通性</span></span><br><span class="line">rosnode <span class="built_in">kill</span> NODE <span class="comment"># 结束一个正在运动的节点</span></span><br><span class="line">rosnode info NODE <span class="comment"># 打印所有关节点的信息</span></span><br></pre></td></tr></table></figure>
+</blockquote>
+</li>
+</ul>
+<h2 id="1-2-Publisher-and-Subscriber">1.2 Publisher and Subscriber</h2>
+<p>​		ROS不同包中的节点，通过Topic和Message进行交流和信息传递。节点可以作为Publisher来创建Topic和发布消息Message；同时其他Node可以通过Subscriber订阅别的Node的Topic来进行Message接收。</p>
+<h3 id="1-2-1-Publisher-创建Topic并发送message">1.2.1 Publisher 创建Topic并发送message</h3>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//直接在pkg所在文件夹下创建cpp文件，然后编辑cpp文件内容</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;ros/ros.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;std_msgs/string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span>* argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ros::<span class="built_in">init</span>(argc,argv,<span class="string">&quot;test_pkg_node1&quot;</span>);</span><br><span class="line">    ros::NodeHandle nh;</span><br><span class="line">    ros::Pubsher pub = nh.<span class="built_in">advertise</span>&lt;std_msgs::String&gt;(<span class="string">&quot;vel&quot;</span>,<span class="number">10</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">while</span>(ros::ok)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;node1 is ok&quot;</span>);</span><br><span class="line">        std_mags::String msg;</span><br><span class="line">        msg.data = <span class="string">&quot;&quot;</span>;</span><br><span class="line">        pub.<span class="built_in">publish</span>(mag);</span><br><span class="line">     	loop_rate.<span class="built_in">sleep</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//node 的作用：在运行node时，显示node1 is ok</span></span><br><span class="line"><span class="comment">//在[pkg_name]文件夹下，修改CMakeList.txt文件，使其成功编译</span></span><br><span class="line"><span class="built_in">add_execute</span>($[pkg_name]_node [要编译的cpp源文件])</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Publish Message Step：</p>
+<ol>
+<li>在ROS标准Message中，选择Messgae 类型；#include &lt;std_msgs/string.h&gt;</li>
+<li>初始化一个ROS的大管家；ros::NodeHandle nh;</li>
+<li>初始化一个Pbulisher； ros::Pubsher pub = nh.advertise&lt;std_msgs::String&gt;(“vel”,10);//后一个参数用来设置队列长度</li>
+<li>定义消息类型：std_mags:: String  msg;</li>
+<li>给出msg内容：msg.data = “”;</li>
+<li>发送Message：pub.publish(mag);</li>
+</ol>
+<ul>
+<li>如果想以一定频率发送消息，则使用ros::Rate loop_rate(10);函数</li>
+<li>并在publish后，loop_rate.sleep();</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>测试流程：按照上述编译，启动Node；打开一个新终端，此时可以通过以下命令来查看Topic和Message</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">rostopic list <span class="comment">#显示活跃的topic</span></span><br><span class="line">rostopic info /topic <span class="comment"># 打印有关话题的信息，如消息类型、发布者和订阅者</span></span><br><span class="line">rostopic <span class="built_in">type</span> /topic <span class="comment"># 显示给定话题的消息类型</span></span><br><span class="line">rostopic <span class="built_in">echo</span> /[topic_nam] <span class="comment">#输出topic的message信息</span></span><br><span class="line">rostopic hz /[topic_nam] <span class="comment"># 输出Topic发送频率</span></span><br></pre></td></tr></table></figure>
+</blockquote>
+<h3 id="1-2-2-Subscriber-订阅Topic并显示接收到的message">1.2.2 Subscriber 订阅Topic并显示接收到的message</h3>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//创建接收package，与创建pkg过程一样</span></span><br><span class="line"><span class="comment">//创建接收节点</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;ros/ros.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;std_msgs/string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">subnode1_callbak</span><span class="params">(std_msg::string msg)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(msg.data.<span class="built_in">c_str</span>());</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">subnode2_callbak</span><span class="params">(std_msg::string msg)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(msg.data.<span class="built_in">c_str</span>());</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> * argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ros::<span class="built_in">init</span>(argc, argv, <span class="string">&quot;sub_node&quot;</span>);</span><br><span class="line">    </span><br><span class="line">    ros::NodeHandle nh;</span><br><span class="line">    ros::Subscribe sub = nh.<span class="built_in">subscribe</span>(<span class="string">&quot;topic1&quot;</span>,<span class="number">10</span>,subnode1_callback);<span class="comment">//接收topic名称，排队数据长度，回调函数</span></span><br><span class="line">    ros::Subscribe sub2 = nh.<span class="built_in">subscribe</span>(<span class="string">&quot;topic2&quot;</span>,<span class="number">10</span>,subnode2_callback);<span class="comment">//接收topic名称，排队数据长度，回调函数</span></span><br><span class="line">    <span class="keyword">while</span>(ros::ok)</span><br><span class="line">    &#123;</span><br><span class="line">       ros::<span class="built_in">spinOnce</span>(); <span class="comment">//处理完上面函数看一下接收到的topic，没有的话就只能接收到一次了</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//可以用rqt_graph来查看topic之间的订阅，且看到不同node</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>话题订阅步骤:</p>
+<ol>
+<li>
+<p>确定话题名称和消息类型</p>
+</li>
+<li>
+<p>在代码文件中include&lt;ros.h&gt;和消息类型对应的头文件</p>
+</li>
+<li>
+<p>在main函数中通过NodeHandler大管家订阅一个话题并设置消息接收回调函数。</p>
+</li>
+<li>
+<p>定义一个回调函数，对接收到的消息包进行处理。</p>
+</li>
+<li>
+<p>main函数中需要执行ros::spinOnce()，让回调函数能够响应接收到的消息包。</p>
+</li>
+</ol>
+<p>rqt_graph</p>
+<p>图形化显示当前系统活跃的节点以及节点间的话题通讯关系</p>
+</blockquote>
+<blockquote>
+<p>快捷方法启动ros节点 - launch文件（xml文件）启动</p>
+<p>步骤：</p>
+<p>1.使用launch文件，可以通过roslaunch指令一次启动多个节点。<br>
+2.在launch文件中，为节点添加 output=&quot;screen”属性，可以让节点信息输出在终端中。(ROS WARN不受该属性控制)<br>
+3.在launch文件中，为节点添加launch-prefix=“gnome-terminal -e属性，可以让节点单独运行在一个独立终端中。</p>
+</blockquote>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="http://example.com">Llover</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="http://example.com/2025/07/12/%E4%BA%BA%E5%BD%A2%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%AE%87%E6%A0%91%E7%AF%87%E4%B8%89-ROS%E7%AE%80%E5%8D%95%E5%AD%A6%E4%B9%A0/">http://example.com/2025/07/12/%E4%BA%BA%E5%BD%A2%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%AE%87%E6%A0%91%E7%AF%87%E4%B8%89-ROS%E7%AE%80%E5%8D%95%E5%AD%A6%E4%B9%A0/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles on this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless otherwise stated.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E4%BA%BA%E5%BD%A2%E6%9C%BA%E5%99%A8%E4%BA%BA/">人形机器人</a><a class="post-meta__tags" href="/tags/%E5%AE%87%E6%A0%91/">宇树</a><a class="post-meta__tags" href="/tags/ROS/">ROS</a></div><div class="post-share"><div class="social-share" data-image="/img/avatar.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2025/07/11/%E4%BA%BA%E5%BD%A2%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%AE%87%E6%A0%91%E7%AF%87%E4%BA%8C-%E7%B3%BB%E7%BB%9F%E6%9E%84%E6%88%90/" title="人形机器人学习笔记-宇树篇二-系统构成"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">Next</div><div class="info-item-2">人形机器人学习笔记-宇树篇二-系统构成</div></div><div class="info-2"><div class="info-item-1">根据深蓝学院课程，总结宇树机器人G1硬件、软件构成</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2025/07/11/%E4%BA%BA%E5%BD%A2%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%AE%87%E6%A0%91%E7%AF%87%E4%BA%8C-%E7%B3%BB%E7%BB%9F%E6%9E%84%E6%88%90/" title="人形机器人学习笔记-宇树篇二-系统构成"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-07-11</div><div class="info-item-2">人形机器人学习笔记-宇树篇二-系统构成</div></div><div class="info-2"><div class="info-item-1">根据深蓝学院课程，总结宇树机器人G1硬件、软件构成</div></div></div></a><a class="pagination-related" href="/2025/07/10/%E4%BA%BA%E5%BD%A2%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%AE%87%E6%A0%91%E7%AF%87%E4%B8%80-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" title="人形机器人学习笔记-宇树篇一-环境搭建"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-07-10</div><div class="info-item-2">人形机器人学习笔记-宇树篇一-环境搭建</div></div><div class="info-2"><div class="info-item-1">宇树G1环境搭建步骤</div></div></div></a><a class="pagination-related" href="/2025/07/10/%E4%BA%BA%E5%BD%A2%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E6%99%BA%E5%85%83%E7%AF%87%E4%B8%80-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" title="人形机器人学习笔记-智元篇一-环境搭建"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-07-10</div><div class="info-item-2">人形机器人学习笔记-智元篇一-环境搭建</div></div><div class="info-2"><div class="info-item-1">智元灵犀X1环境搭建步骤</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> Comments</span></div></div><div class="comment-wrap"><div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Llover</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">11</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">18</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/llover-strong"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/llover-strong" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">欢迎来到我的博客~</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-ROS%E5%9F%BA%E6%9C%AC"><span class="toc-text">1. ROS基本</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-ROS%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8D%95%E5%85%83%EF%BC%9ANode%E8%8A%82%E7%82%B9%E5%92%8CPackage%E5%8C%85"><span class="toc-text">1.1 ROS的基本单元：Node节点和Package包</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-1-Package-%E5%92%8C-Node-%E5%88%9B%E5%BB%BA"><span class="toc-text">1.1.1 Package 和 Node 创建</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-Publisher-and-Subscriber"><span class="toc-text">1.2 Publisher and Subscriber</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-1-Publisher-%E5%88%9B%E5%BB%BATopic%E5%B9%B6%E5%8F%91%E9%80%81message"><span class="toc-text">1.2.1 Publisher 创建Topic并发送message</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-2-Subscriber-%E8%AE%A2%E9%98%85Topic%E5%B9%B6%E6%98%BE%E7%A4%BA%E6%8E%A5%E6%94%B6%E5%88%B0%E7%9A%84message"><span class="toc-text">1.2.2 Subscriber 订阅Topic并显示接收到的message</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/07/12/%E4%BA%BA%E5%BD%A2%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%AE%87%E6%A0%91%E7%AF%87%E4%B8%89-ROS%E7%AE%80%E5%8D%95%E5%AD%A6%E4%B9%A0/" title="人形机器人学习笔记-宇树篇三-ROS简单学习">人形机器人学习笔记-宇树篇三-ROS简单学习</a><time datetime="2025-07-12T00:55:34.000Z" title="Created 2025-07-12 08:55:34">2025-07-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/07/11/%E4%BA%BA%E5%BD%A2%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%AE%87%E6%A0%91%E7%AF%87%E4%BA%8C-%E7%B3%BB%E7%BB%9F%E6%9E%84%E6%88%90/" title="人形机器人学习笔记-宇树篇二-系统构成">人形机器人学习笔记-宇树篇二-系统构成</a><time datetime="2025-07-11T13:00:22.000Z" title="Created 2025-07-11 21:00:22">2025-07-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/07/10/%E4%BA%BA%E5%BD%A2%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%AE%87%E6%A0%91%E7%AF%87%E4%B8%80-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" title="人形机器人学习笔记-宇树篇一-环境搭建">人形机器人学习笔记-宇树篇一-环境搭建</a><time datetime="2025-07-10T04:12:08.000Z" title="Created 2025-07-10 12:12:08">2025-07-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/07/10/%E4%BA%BA%E5%BD%A2%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E6%99%BA%E5%85%83%E7%AF%87%E4%B8%80-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" title="人形机器人学习笔记-智元篇一-环境搭建">人形机器人学习笔记-智元篇一-环境搭建</a><time datetime="2025-07-10T03:53:06.000Z" title="Created 2025-07-10 11:53:06">2025-07-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/04/23/%E8%B6%B3%E5%BC%8F%E6%9C%BA%E5%99%A8%E4%BA%BA%E8%BF%90%E5%8A%A8%E5%AD%A6(%E4%B8%89)%EF%BC%9A%E6%8F%92%E5%80%BC%E4%B8%8E%E8%A7%84%E5%88%92/" title="足式机器人运动学（三）- 插值与规划 (初稿)">足式机器人运动学（三）- 插值与规划 (初稿)</a><time datetime="2025-04-23T03:10:37.000Z" title="Created 2025-04-23 11:10:37">2025-04-23</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2025 By Llover</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.5</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Reading Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table of Contents"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="Scroll to Comments"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><div class="js-pjax"><script>(async () => {
+  const showKatex = () => {
+    document.querySelectorAll('#article-container .katex').forEach(el => el.classList.add('katex-show'))
+  }
+
+  if (!window.katex_js_css) {
+    window.katex_js_css = true
+    await btf.getCSS('https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css')
+    if (false) {
+      await btf.getScript('https://cdn.jsdelivr.net/npm/katex/dist/contrib/copy-tex.min.js')
+    }
+  }
+
+  showKatex()
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="algolia-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Search</span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="search-wrap"><div id="algolia-search-input"></div><hr/><div id="algolia-search-results"><div id="algolia-hits"></div><div id="algolia-pagination"></div><div id="algolia-info"><div class="algolia-stats"></div><div class="algolia-poweredBy"></div></div></div></div></div><div id="search-mask"></div><script src="https://cdn.jsdelivr.net/npm/algoliasearch/dist/lite/builds/browser.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instantsearch.js/dist/instantsearch.production.min.js"></script><script src="/js/search/algolia.js"></script></div></div></body></html>
